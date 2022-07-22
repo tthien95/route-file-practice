@@ -1,5 +1,9 @@
 import React from 'react';
-import Link from 'next/link';
+import styles from './event-item.module.css';
+import Button from '../ui/Button';
+import DateIcon from '../icons/date-icon';
+import AddressIcon from '../icons/address-icon';
+import ArrowRightIcon from '../icons/arrow-right-icon';
 
 export default function EventItem({ title, image, date, location, id }) {
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -12,20 +16,27 @@ export default function EventItem({ title, image, date, location, id }) {
   const exploreLink = `/events/${id}`;
 
   return (
-    <li>
+    <li className={styles.item}>
       <img src={'/' + image} alt={title} />
-      <div>
+      <div className={styles.content}>
         <div>
           <h2>{title}</h2>
-          <div>
+          <div className={styles.date}>
+            <DateIcon />
             <time>{formattedDate}</time>
           </div>
-          <div>
+          <div className={styles.address}>
+            <AddressIcon />
             <address>{formattedAdress}</address>
           </div>
         </div>
-        <div>
-          <Link href={exploreLink}>Explore Event</Link>
+        <div className={styles.actions}>
+          <Button link={exploreLink}>
+            <span>Explore Event</span>
+            <span className={styles.icon}>
+              <ArrowRightIcon />
+            </span>
+          </Button>
         </div>
       </div>
     </li>
