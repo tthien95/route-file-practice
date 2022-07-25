@@ -9,7 +9,7 @@ export default function EventsPage() {
   return (
     <>
       <EventSearch />
-      <EventList item={events} />
+      <EventList items={events} />
     </>
   );
 }

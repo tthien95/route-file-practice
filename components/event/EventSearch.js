@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../ui/Button';
-import { form, controls, control } from './event-search.module.css';
+import { form, controls, control } from './events-search.module.css';
 
 export default function EventSearch() {
   return (
@@ -31,7 +31,7 @@ export default function EventSearch() {
           </select>
         </div>
       </div>
-      <Button>Fire Event</Button>
+      <Button>Find Event</Button>
     </form>
   );
 }
