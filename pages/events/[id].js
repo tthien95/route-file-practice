@@ -1,5 +1,5 @@
 import React from 'react';
-import { getEventById, getAllEvents } from '../../helpers/api-util';
+import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
 import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
@@ -37,13 +37,13 @@ export async function getStaticProps({ params }) {
 
   const event = await getEventById(eventId);
 
-  return { props: { event } };
+  return { props: { event }, revalidate: 30 };
 }
 
 export async function getStaticPaths() {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   const paths = events.map((event) => ({ params: { id: event.id } }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking' };
 }

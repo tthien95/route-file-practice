@@ -28,6 +28,10 @@ const handleResponse = async (response) => {
   return events;
 };
 
+if (process.env.NODE_ENV == 'development') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+}
+
 export function getAllEvents() {
   return fetch(`${baseUrl}`).then(handleResponse);
 }
