@@ -21,15 +21,27 @@ const handleResponse = async (response) => {
       events.push({
         id: key,
         ...element
-      })
+      });
     }
   }
 
   return events;
 };
 
+export function getAllEvents() {
+  return fetch(`${baseUrl}`).then(handleResponse);
+}
+
 export async function getFeaturedEvents() {
   return fetch(`${baseUrl}?orderBy="isFeatured"&equalTo=true`).then(
     handleResponse
   );
+}
+
+export async function getEventById(id) {
+  const result = await fetch(`${baseUrl}?orderBy="$key"&equalTo="${id}"`).then(
+    handleResponse
+  );
+
+  return result.length > 0 ? result[0] : null;
 }
