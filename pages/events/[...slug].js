@@ -11,8 +11,11 @@ export default function FilteredEventPage() {
   const [loadedEvents, setLoadedEvents] = useState();
   const filterData = router.query.slug;
 
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
   const { data, error } = useSWR(
-    'https://react-http-dummy-57a85-default-rtdb.asia-southeast1.firebasedatabase.app/events.json'
+    'https://react-http-dummy-57a85-default-rtdb.asia-southeast1.firebasedatabase.app/events.json',
+    fetcher
   );
 
   useEffect(() => {
