@@ -49,3 +49,18 @@ export async function getEventById(id) {
 
   return result.length > 0 ? result[0] : null;
 }
+
+export async function getFilteredEvents(dateFilter) {
+  const { year, month } = dateFilter;
+
+  const DUMMY_EVENTS = await getAllEvents();
+
+  let filteredEvents = DUMMY_EVENTS.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
+  });
+
+  return filteredEvents;
+}

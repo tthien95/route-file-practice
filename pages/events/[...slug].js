@@ -1,32 +1,17 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { getFilteredEvents } from '../../dummy-data';
+import { getFilteredEvents } from '../../helpers/api-util';
 import EventList from '../../components/event/EventList';
 import ResultsTitle from '../../components/event/ResultsTitle';
 import Button from '../../components/ui/Button';
 import ErrorAlert from '../../components/ui/ErrorAlert';
 
-export default function FilteredEventPage() {
-  const router = useRouter();
-  const filterData = router.query.slug;
-
-  if (!filterData) {
-    return <p className="center">Loading...</p>;
-  }
-
-  const [filteredYear, filteredMonth] = filterData;
-
-  const numYear = +filteredYear;
-  const numMonth = +filteredMonth;
-
-  if (
-    isNaN(numYear) ||
-    isNaN(numMonth) ||
-    numYear > 2030 ||
-    numYear < 2021 ||
-    numMonth < 1 ||
-    numMonth > 12
-  ) {
+export default function FilteredEventPage({
+  hasError = false,
+  filteredEvents,
+  numYear,
+  numMonth
+}) {
+  if (hasError) {
     return (
       <>
         <ErrorAlert>
@@ -38,8 +23,6 @@ export default function FilteredEventPage() {
       </>
     );
   }
-
-  const filteredEvents = getFilteredEvents({ year: numYear, month: numMonth });
 
   if (!filteredEvents || filteredEvents.length == 0) {
     return (
@@ -62,4 +45,37 @@ export default function FilteredEventPage() {
       <EventList items={filteredEvents} />
     </>
   );
+}
+
+export async function getServerSideProps({ params }) {
+  const filterData = params.slug;
+
+  const [filteredYear, filteredMonth] = filterData;
+
+  const numYear = +filteredYear;
+  const numMonth = +filteredMonth;
+
+  if (
+    isNaN(numYear) ||
+    isNaN(numMonth) ||
+    numYear > 2030 ||
+    numYear < 2021 ||
+    numMonth < 1 ||
+    numMonth > 12
+  ) {
+    return {
+      props: {
+        hasError: true
+      }
+    };
+  }
+
+  const filteredEvents = await getFilteredEvents({
+    year: numYear,
+    month: numMonth
+  });
+
+  return {
+    props: { filteredEvents, numYear, numMonth }
+  };
 }
