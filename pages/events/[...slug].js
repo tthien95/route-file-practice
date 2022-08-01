@@ -6,12 +6,12 @@ import Button from '../../components/ui/Button';
 import ErrorAlert from '../../components/ui/ErrorAlert';
 import useSWR from 'swr';
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 export default function FilteredEventPage() {
   const router = useRouter();
   const [loadedEvents, setLoadedEvents] = useState();
   const filterData = router.query.slug;
-
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
   const { data, error } = useSWR(
     'https://react-http-dummy-57a85-default-rtdb.asia-southeast1.firebasedatabase.app/events.json',
