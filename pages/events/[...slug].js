@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import EventList from '../../components/event/EventList';
 import ResultsTitle from '../../components/event/ResultsTitle';
 import Button from '../../components/ui/Button';
@@ -91,6 +92,13 @@ export default function FilteredEventPage() {
 
   return (
     <>
+      <Head>
+        <title>Filtered Events</title>
+        <meta
+          name="description"
+          content={`All events for ${numMonth}/${numYear}`}
+        />
+      </Head>
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>

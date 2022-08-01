@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
 import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
@@ -18,6 +19,10 @@ export default function EventDetailPage({ event }) {
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
       <EventSummary title={title} />
       <EventLogistics
         date={date}
