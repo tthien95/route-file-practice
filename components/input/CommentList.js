@@ -1,21 +1,19 @@
 import { comments } from './comment-list.module.css';
 
-function CommentList() {
+function CommentList({ items }) {
+  if (!items) {
+    return <p>Loading...</p>;
+  }
   return (
     <ul className={comments}>
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {items.map((comment) => (
+        <li key={comment.id}>
+          <p>{comment.text}</p>
+          <div>
+            By <address>{comment.name}</address>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }

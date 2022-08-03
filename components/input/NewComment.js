@@ -36,7 +36,7 @@ function NewComment({ onAddComment }) {
   }
 
   return (
-    <form className={form}>
+    <form className={form} onSubmit={sendCommentHandler}>
       <div className={row}>
         <div className={control}>
           <label htmlFor="email">Your email</label>
