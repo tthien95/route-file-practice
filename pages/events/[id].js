@@ -5,6 +5,7 @@ import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
 import ErrorAlert from '../../components/ui/ErrorAlert';
+import Comments from '../../components/input/comments';
 
 export default function EventDetailPage({ event }) {
   if (!event) {
@@ -15,7 +16,7 @@ export default function EventDetailPage({ event }) {
     );
   }
 
-  const { title, description, location, date, image } = event;
+  const { id, title, description, location, date, image } = event;
 
   return (
     <>
@@ -33,6 +34,7 @@ export default function EventDetailPage({ event }) {
       <EventContent>
         <p>{description}</p>
       </EventContent>
+      <Comments eventId={id}/>
     </>
   );
 }
